@@ -1,0 +1,65 @@
+[project]
+name = "{{ package_name }}"
+authors = [
+    { name = "{{ author name }}", email = "{{ author email " }},
+]
+description = "{{ description }}"
+readme = "README.md"
+version = "0.0.0"
+urls.repository = "{{ repository url }}"
+requires-python = ">=3.7"
+dependencies = [
+    "{{ main dependencies }}"
+]
+optional-dependencies.dev = [
+    "black ~= 22.12.0",
+    "ruff ~= 0.0.177",
+    "isort ~= 5.11.2",
+]
+optional-dependencies.test = [
+    "coverage ~= 6.5.0",
+    "pytest ~= 7.1.2",
+    "pytest-mock ~= 3.10.0"
+]
+
+[build-system]
+requires = [
+    "setuptools ~= 62.2.0",
+    "wheel ~= 0.37.1",
+    "twine ~= 4.0.2",
+    "build ~= 0.9.0"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages.find.where = ["src"]
+
+[tool.pytest]
+ini_options.addopts = ["-ra --cov"]
+ini_options.testpaths = ["tests"]
+ini_options.pythonpath = [".", "src"]
+
+[tool.coverage]
+run.command_line = "-m pytest test"
+run.source = ["src"]
+report.show_missing = true
+report.exclude_lines = [
+    # Magic comment to exclude from coverage report
+    "# pragma: no cover",
+    # Don't complain if non-runnable code isn't run
+    "if __name__ == ['\"]__main__['\"]:",
+]
+
+[tool.ruff]
+line-length = 100
+ignore = ["D203"]
+show-source = true
+exclude = ["__init__.py", '.gitignore', 'venv']
+
+[tool.black]
+line-length = 100
+target-version = ['py39']
+
+[tool.isort]
+skip = ["__init__.py", '.gitignore', 'venv']
+profile = "black"
