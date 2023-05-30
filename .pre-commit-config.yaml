@@ -22,3 +22,9 @@ repos:
         name: pytest-check
         entry: pytest .
         language: system
+      - id: mypy
+        name: mypy
+        entry: mypy
+        language: system
+        types: [ python ]
+        files: ^[src/|test]
